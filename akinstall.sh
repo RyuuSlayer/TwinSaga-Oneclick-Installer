@@ -38,7 +38,7 @@ if [ "$INVAR" = "2" ] ; then
 fi
 
 # select server version
-echo -e "Select the version you want to install.\n1) yokohiro - 007.010.01.02 (recommended)\n2) wangweijing1262 - 007.004.01.02\n3) yokohiro - 003.005.01.04\n4) genz - 003.005.01.04\n5) eperty123 - 003.005.01.04\n6) hycker - 003.005.01.03"
+echo -e "Select the version you want to install.\n1) xiaoguai475 - 015.001.01.16 (recommended)\n2) yokohiro - 007.010.01.02\n3) wangweijing1262 - 007.004.01.02\n4) yokohiro - 003.005.01.04\n5) genz - 003.005.01.04\n6) eperty123 - 003.005.01.04\n7) hycker - 003.005.01.03"
 read AKVERSION
 
 # make sure start / stop commands are working
@@ -85,9 +85,66 @@ if [ "$(cat /proc/cmdline | grep vsyscall=emulate)" == "" ] ; then
 fi
 
 # --------------------------------------------------
-# yokohiro - 007.010.01.02
+# xiaoguai475 - 015.001.01.16
 # --------------------------------------------------
 if [ "$AKVERSION" = 1 ] ; then
+	cd "/root/hxsy"
+	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/xiaoguai475_015_001_01_16" -O "xiaoguai475_015_001_01_16"
+	chmod 777 xiaoguai475_015_001_01_16
+	. "/root/hxsy/xiaoguai475_015_001_01_16"
+	
+	# config files
+	wget --no-check-certificate "$MAINCONFIG" -O "config.zip"
+	unzip "config.zip"
+	rm -f "config.zip"
+	sed -i "s/xxxxxxxx/$DBPASS/g" "setup.ini"
+	
+	# subservers
+	wget --no-check-certificate --load-cookies "/tmp/cookies.txt" "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$SUBSERVERSID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=$SUBSERVERSID" -O "server.zip" && rm -rf "/tmp/cookies.txt"
+	unzip "server.zip"
+	rm -f "server.zip"
+	sed -i "s/xxxxxxxx/$DBPASS/g" "GatewayServer/setup.ini"
+	sed -i "s/\x3d\xc0\xa8\xb2/\x3d$PATCHIP/g" "WorldServer/WorldServer"
+	sed -i "s/\x3d\xc0\xa8\xb2/\x3d$PATCHIP/g" "ZoneServer/ZoneServer"
+	
+	# Data folder
+	wget --no-check-certificate --load-cookies "/tmp/cookies.txt" "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$DATAFOLDER" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=$DATAFOLDER" -O "Data.zip" && rm -rf "/tmp/cookies.txt"
+	unzip "Data.zip" -d "Data"
+	rm -f "Data.zip"
+	
+	# SQL files
+	wget --no-check-certificate "$SQLFILES" -O "SQL.zip"
+	unzip "SQL.zip" -d "SQL"
+	rm -f "SQL.zip"
+	
+	# set permissions
+	chmod 777 /root -R
+	
+	# install postgresql database
+	service postgresql restart
+	sudo -u postgres psql -c "create database \"FFAccount\" encoding 'SQL_ASCII' template template0;"
+	sudo -u postgres psql -c "create database \"FFDB1\" encoding 'SQL_ASCII' template template0;"
+	sudo -u postgres psql -c "create database \"FFMember\" encoding 'SQL_ASCII' template template0;"
+	sudo -u postgres psql -d FFAccount -c "\i '/root/hxsy/SQL/FFAccount.bak';"
+	sudo -u postgres psql -d FFDB1 -c "\i '/root/hxsy/SQL/FFDB1.bak';"
+	sudo -u postgres psql -d FFMember -c "\i '/root/hxsy/SQL/FFMember.bak';"
+	sudo -u postgres psql -d FFAccount -c "UPDATE worlds SET ip = '$IP' WHERE ip = '192.168.178.59';"
+	sudo -u postgres psql -d FFDB1 -c "UPDATE serverstatus SET ext_address = '$IP' WHERE ext_address = '192.168.178.59';"
+	sudo -u postgres psql -d FFDB1 -c "UPDATE serverstatus SET int_address = '$IP' WHERE int_address = '192.168.178.59';"
+	
+	# remove server setup files
+	rm -f xiaoguai475_015_001_01_16
+	
+	# setup info
+	VERSIONNAME="xiaoguai475 - 015.001.01.16"
+	CREDITS="xiaoguai475"
+	THREADLINK="https://forum.ragezone.com/threads/aura-kingdom-released-files.1204666/"
+fi
+
+# --------------------------------------------------
+# yokohiro - 007.010.01.02
+# --------------------------------------------------
+if [ "$AKVERSION" = 2 ] ; then
 	cd "/root/hxsy"
 	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/yokohiro_007_010_01_02" -O "yokohiro_007_010_01_02"
 	chmod 777 yokohiro_007_010_01_02
@@ -153,7 +210,7 @@ fi
 # --------------------------------------------------
 # wangweijing1262 - 007.004.01.02
 # --------------------------------------------------
-if [ "$AKVERSION" = 2 ] ; then
+if [ "$AKVERSION" = 3 ] ; then
 	cd "/root/hxsy"
 	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/wangweijing1262_007_004_01_02" -O "wangweijing1262_007_004_01_02"
 	chmod 777 wangweijing1262_007_004_01_02
@@ -219,7 +276,7 @@ fi
 # --------------------------------------------------
 # yokohiro - 003.005.01.04
 # --------------------------------------------------
-if [ "$AKVERSION" = 3 ] ; then
+if [ "$AKVERSION" = 4 ] ; then
 	cd "/root/hxsy"
 	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/yokohiro_003_005_01_04" -O "yokohiro_003_005_01_04"
 	chmod 777 yokohiro_003_005_01_04
@@ -291,7 +348,7 @@ fi
 # --------------------------------------------------
 # genz - 003.005.01.04
 # --------------------------------------------------
-if [ "$AKVERSION" = 4 ] ; then
+if [ "$AKVERSION" = 5 ] ; then
 	cd "/root/hxsy"
 	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/genz_003_005_01_04" -O "genz_003_005_01_04"
 	chmod 777 genz_003_005_01_04
@@ -359,7 +416,7 @@ fi
 # --------------------------------------------------
 # eperty123 - 003.005.01.04
 # --------------------------------------------------
-if [ "$AKVERSION" = 5 ] ; then
+if [ "$AKVERSION" = 6 ] ; then
 	cd "/root/hxsy"
 	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/eperty123_003_005_01_04" -O "eperty123_003_005_01_04"
 	chmod 777 eperty123_003_005_01_04
@@ -423,7 +480,7 @@ fi
 # --------------------------------------------------
 # hycker - 003.005.01.03
 # --------------------------------------------------
-if [ "$AKVERSION" = 6 ] ; then
+if [ "$AKVERSION" = 7 ] ; then
 	cd "/root/hxsy"
 	wget --no-check-certificate "https://raw.githubusercontent.com/haruka98/ak_oneclick_installer/master/hycker_003_005_01_03" -O "hycker_003_005_01_03"
 	chmod 777 hycker_003_005_01_03
