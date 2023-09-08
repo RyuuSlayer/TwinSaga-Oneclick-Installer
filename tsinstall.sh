@@ -38,7 +38,7 @@ if [ "$INVAR" = "2" ] ; then
 fi
 
 # select server version
-echo -e "Select the version you want to install.\n1) xiaoguai475 - v1249 (recommended)
+echo -e "Select the version you want to install.\n1) xiaoguai475 - v1249 (recommended)"
 read TSVERSION
 
 # make sure start / stop commands are working
