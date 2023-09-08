@@ -110,8 +110,8 @@ if [ "$AKVERSION" = 1 ] ; then
 
 	# Data folder
 	wget --no-check-certificate --load-cookies "/tmp/cookies.txt" "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$DATAFOLDER" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=$DATAFOLDER" -O "Data.zip" && rm -rf "/tmp/cookies.txt"
-	unzip "Data.zip" -d "Data"
-	rm -f "Data.zip"
+	unzip "data.zip" -d "data"
+	rm -f "data.zip"
 	
 	# SQL files
 	wget --no-check-certificate "$SQLFILES" -O "SQL.zip"
