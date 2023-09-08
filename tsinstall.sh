@@ -123,16 +123,16 @@ if [ "$TSVERSION" = 1 ] ; then
 	
 	# install postgresql database
 	service postgresql restart
-	sed -i "s/^version [0-9]*$//g" /tmp/sk_schema_alter
-	sed -i "s/^version [0-9]*$//g" /tmp/ska_schema_alter
+	sed -i "s/^version [0-9]*$//g" /root/ryuu/SQL/sk_schema_alter
+	sed -i "s/^version [0-9]*$//g" /root/ryuu/SQL/ska_schema_alter
 	sudo -u postgres psql -c "create database \"ARAccount\" encoding 'SQL_ASCII' template template0;"
 	sudo -u postgres psql -c "create database \"ARDB1\" encoding 'SQL_ASCII' template template0;"
 	sudo -u postgres psql -c "create database \"ARMember\" encoding 'SQL_ASCII' template template0;"
-	sudo -u postgres psql -d ARAccount -c "\i '/tmp/ska_schema';"
-	sudo -u postgres psql -d ARAccount -c "\i '/tmp/ska_schema_alter';"
-	sudo -u postgres psql -d ARDB1 -c "\i '/tmp/sk_schema';"
-	sudo -u postgres psql -d ARDB1 -c "\i '/tmp/sk_schema_alter';"
-	sudo -u postgres psql -d ARMember -c "\i '/tmp/FFMember.bak';"
+	sudo -u postgres psql -d ARAccount -c "\i '/root/ryuu/SQL/ska_schema';"
+	sudo -u postgres psql -d ARAccount -c "\i '/root/ryuu/SQL/ska_schema_alter';"
+	sudo -u postgres psql -d ARDB1 -c "\i '/root/ryuu/SQL/sk_schema';"
+	sudo -u postgres psql -d ARDB1 -c "\i '/root/ryuu/SQL/sk_schema_alter';"
+	sudo -u postgres psql -d ARMember -c "\i '/root/ryuu/SQL/FFMember.bak';"
 	
 	# remove server setup files
 	rm -f xiaoguai475_v1249
