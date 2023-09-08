@@ -107,7 +107,7 @@ if [ "$AKVERSION" = 1 ] ; then
 	sed -i "s/\x44\x24\x0c\x28\x62\x34/\x44\x24\x0c\x08\x49\x40/g" "MissionServer/MissionServer"
 	sed -i "s/\x3d\xc0\xa8\xb2/\x3d$PATCHIP/g" "WorldServer/WorldServer"
 	sed -i "s/\x3d\xc0\xa8\xb2/\x3d$PATCHIP/g" "ZoneServer/ZoneServer"
-	
+
 	# Data folder
 	wget --no-check-certificate --load-cookies "/tmp/cookies.txt" "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://files.rom-archive.de/api/public/dl/1txnwqUO/Collector%20Stuffz%20%5BUndatted%5D/TwinSaga%20Server%20files/=$DATAFOLDER" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=$DATAFOLDER" -O "data.zip" && rm -rf "/tmp/cookies.txt"
 	unzip "data.zip" -d "Data"
