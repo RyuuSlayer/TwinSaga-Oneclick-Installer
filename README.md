@@ -8,3 +8,4 @@ The script is intended for use on debian 11. The command to download and run thi
 ```shell
 wget --no-check-certificate -nv "https://raw.githubusercontent.com/RyuuSlayer/TwinSaga-Oneclick-Installer/master/tsinstall.sh" -O "tsinstall.sh"; chmod 777 "tsinstall.sh"; ./tsinstall.sh
 ```
+Big thanks to Haruka98, who has helped me in creating this installer, check out his [Aura Kingdom Oneclick Installer](https://github.com/haruka98/ak_oneclick_installer). :)
