@@ -123,15 +123,16 @@ if [ "$AKVERSION" = 1 ] ; then
 	
 	# install postgresql database
 	service postgresql restart
-	sudo -u postgres psql -c "create database \"FFAccount\" encoding 'SQL_ASCII' template template0;"
-	sudo -u postgres psql -c "create database \"FFDB1\" encoding 'SQL_ASCII' template template0;"
-	sudo -u postgres psql -c "create database \"FFMember\" encoding 'SQL_ASCII' template template0;"
-	sudo -u postgres psql -d FFAccount -c "\i '/root/ryuu/SQL/FFAccount.bak';"
-	sudo -u postgres psql -d FFDB1 -c "\i '/root/ryuu/SQL/FFDB1.bak';"
-	sudo -u postgres psql -d FFMember -c "\i '/root/ryuu/SQL/FFMember.bak';"
-	sudo -u postgres psql -d FFAccount -c "UPDATE worlds SET ip = '$IP' WHERE ip = '192.168.178.59';"
-	sudo -u postgres psql -d FFDB1 -c "UPDATE serverstatus SET ext_address = '$IP' WHERE ext_address = '192.168.178.59';"
-	sudo -u postgres psql -d FFDB1 -c "UPDATE serverstatus SET int_address = '$IP' WHERE int_address = '192.168.178.59';"
+	sed -i "s/^version [0-9]*$//g" /tmp/sk_schema_alter
+	sed -i "s/^version [0-9]*$//g" /tmp/ska_schema_alter
+	sudo -u postgres psql -c "create database \"ARAccount\" encoding 'SQL_ASCII' template template0;"
+	sudo -u postgres psql -c "create database \"ARDB1\" encoding 'SQL_ASCII' template template0;"
+	sudo -u postgres psql -c "create database \"ARMember\" encoding 'SQL_ASCII' template template0;"
+	sudo -u postgres psql -d ARAccount -c "\i '/tmp/ska_schema';"
+	sudo -u postgres psql -d ARAccount -c "\i '/tmp/ska_schema_alter';"
+	sudo -u postgres psql -d ARDB1 -c "\i '/tmp/sk_schema';"
+	sudo -u postgres psql -d ARDB1 -c "\i '/tmp/sk_schema_alter';"
+	sudo -u postgres psql -d ARMember -c "\i '/tmp/FFMember.bak';"
 	
 	# remove server setup files
 	rm -f xiaoguai475_v1249
