@@ -39,7 +39,7 @@ fi
 
 # select server version
 echo -e "Select the version you want to install.\n1) xiaoguai475 - v1249 (recommended)
-read AKVERSION
+read TSVERSION
 
 # make sure start / stop commands are working
 sudo apt-get -qq install psmisc -y
@@ -87,7 +87,7 @@ fi
 # --------------------------------------------------
 # xiaoguai475 - v1249
 # --------------------------------------------------
-if [ "$AKVERSION" = 1 ] ; then
+if [ "$TSVERSION" = 1 ] ; then
 	cd "/root/ryuu"
 	wget --no-check-certificate "https://raw.githubusercontent.com/RyuuSlayer/TwinSaga-Oneclick-Installer/master/xiaoguai475_v1249" -O "xiaoguai475_v1249"
 	chmod 777 xiaoguai475_v1249
